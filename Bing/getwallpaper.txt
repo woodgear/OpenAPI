@@ -1,13 +1,14 @@
 通过getwallpaper.py可以获取到当天的bing壁纸信息
 json格式为
 {
-"src":"https://www.bing.com/az/hprichbg/rb/MaracanaRio_ZH-CN11094775118_1920x1080.jpg",
-"title":"MaracanaRio",
-"len":1920,
+"src":"https://www.bing.com/az/hprichbg/rb/SachsischeSchweiz_ZH-CN10640382929_1920x1080.jpg",
+"width":1920,
 "height":1080,
-"describe":"包括马拉卡纳体育场在内的里约热内卢夜景",
-"location":"巴西 ",
-"author":"Corey Jenkins"
+"type":"jpg",
+"title":"SachsischeSchweiz",
+"introduce":"撒克逊瑞士国家公园",
+"location":"德国 ",
+"author":"Andreas Vogel" 
 }
 
 或者可以直接访问 http://misakimei.com/openapi/bing/wallpaper.json 来获取当天的bing壁纸 json信息

@@ -50,5 +50,7 @@ imgtype=getType(imagesrc)
 
 
 
-bwjsonmode='{{"src":"{0}","title":"{1}","width":{2},"height":{3},"describe":"{4}","location":"{5}","author":"{6}" }}'
-bwjson=bwjsonmode.format(imagesrc,title,size[0],size[1],describe[0],describe[1],describe[2])
+bwjsonmode='{{"src":"{0}","width":{1},"height":{2},"type":"{3}","title":"{4}","introduce":"{5}","location":"{6}","author":"{7}" }}'
+bwjson=bwjsonmode.format(imagesrc,size[0],size[1],imgtype, title,describe[0],describe[1],describe[2])
+
+#print(bwjson)
