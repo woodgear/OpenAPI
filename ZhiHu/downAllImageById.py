@@ -42,7 +42,6 @@ def downAllImageById(qid,path):
 	
 	base="https://www.zhihu.com/question/"
 	basehtml=str(re.urlopen(base+qid+'?sort=created&page=1').read())
-	print(basehtml)
 	page=getpage(basehtml)
 	
 	srcs=getAllImageSrc(base+qid+'?sort=created&page=',page)
@@ -74,7 +73,7 @@ if len(argv)==2:
 	downAllImageById(argv[1],argv[1])
 elif len(argv)==3:
 	downAllImageById(argv[1],argv[2])
-qid='21448845'
+qid='41815083'
 downAllImageById(qid,qid)
 
 #TODO 如果不登录直接访问知乎的话 会有些答案看不到
