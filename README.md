@@ -1,14 +1,16 @@
 # OpenAPI
 常用网站获取信息的API接口
 
-##Bing
-获取bing壁纸的链接  
-getwallpaper.py  
-直接访问 http://misakimei.com/openapi/bing/wallpaper.json
+# What It is And What is Not
+## It is
+* a orm for website
+## Is Not
+* a spider(alright it is a kind of spider but the point is not mutli thread && dynamic ip && CAPTCHA bypass && Anti-Anti-Spide etc the point is orm)
+## Bing
+get wallpaper
 
+## ZhiHu
+down all image by question id.py
 
-##ZhiHu
-* downAllImageById.py
-使用方式 python downAllImageById.py {问题id} {保存路径}
-
-
+## Shanbay
+get all know word
