@@ -23,11 +23,10 @@ class Shanbay:
         'Cache-Control': "no-cache",
     }
 
-    def __init__(self, userid, auth_token):
-        self.userid = userid
-        self.auth_token = auth_token
-        self.cookies = "userid={};auth_token={}".format(
-            self.userid, self.auth_token)
+    def __init__(self, config):
+        self.config = config
+        self.cookies = "userid={};auth_token={};sessionid={}".format(
+            config['userid'], config['auth_token'], config['sessionid'])
         self.headers['Cookie'] = self.cookies
         pass
     # {"page": page, "_": "1529847629180"}
@@ -44,6 +43,7 @@ class Shanbay:
         ret['words'] = list(
             map(lambda word: word['content'], res['data']['objects']))
         return ret
+
     def get_all_know_word(self):
         return list(set(self.get_all_master_word()+self.get_all_resolved_word()))
 
@@ -53,7 +53,7 @@ class Shanbay:
     def get_all_master_word(self):
         return self.get_word_by_url(self.master_word_url)
 
-    def get_word_by_url(self,url):
+    def get_word_by_url(self, url):
         words = []
         res = self.get_word(url, 1)
         words += res['words']
@@ -63,8 +63,34 @@ class Shanbay:
             words += res['words']
         return words
 
+    def add_word(self, words):
+        for words in split(words,10):
+            url = 'https://www.shanbay.com/bdc/vocabulary/add/batch/'
+            self.headers['Referer'] = 'https://www.shanbay.com/bdc/vocabulary/add/batch/'
+            res = requests.request("GET", url, headers=self.headers, params={
+                "words": words, "_": "1530021937223"})
+            res = json.loads(res.text)
+            print(len(res['learning_dicts']))
+        pass
 
 
-api = Shanbay('109630519', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vYmlsZV80MTZhMWVmZTY0IiwiZGV2aWNlIjowLCJpc19zdGFmZiI6ZmFsc2UsImlkIjoxMDk2MzA1MTksImV4cCI6MTUzMDcxMTM3NX0.Y3KUXFJcC7k6FIRGwaIDZrVACf7AdEzIIWIu8mExA54')
-for word in  api.get_all_know_word():
-    print(word)
+def get_word_from_file(path):
+    word = map(lambda w: w.strip(), open(path).readlines())
+    return list(set(word))
+
+def split(arr, size):
+     arrs = []
+     while len(arr) > size:
+         pice = arr[:size]
+         arrs.append(pice)
+         arr   = arr[size:]
+     arrs.append(arr)
+     return arrs
+
+config = {
+    'userid': '109630519',
+    'sessionid': '".eJyrVopPLC3JiC8tTi2KT0pMzk7NS1GyUkrOz83Nz9MDS0FFi_V885Myc1J98tMz85ygKnWQtWcCdRoaWJoZG5gaWtYCAPwCIBI:1fXThC:43Q0qBbtrd5DcNKaS40khdb_WjY"',
+    'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vYmlsZV80MTZhMWVmZTY0IiwiZGV2aWNlIjowLCJpc19zdGFmZiI6ZmFsc2UsImlkIjoxMDk2MzA1MTksImV4cCI6MTUzMDg4NTY2N30.5ykh7hD85e5a0I0e5jfOwaM33L0fmNIGSzUgzHkJkJc'
+}
+api = Shanbay(config)
+api.add_word(get_word_from_file('./unknow.data'))
